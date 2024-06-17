@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
-import "package:loco11y/features/http_log/inner_screen.dart";
-import "package:loco11y/shared/components/sidebar.dart";
+import "package:loco11y/areas/http_log/ui/screens/inner_screen.dart";
+import "package:loco11y/shared/ui/components/sidebar.dart";
 
 void main() {
   runApp(const MyApp());

@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
-import "package:loco11y/features/http_log/request_detail.dart";
-import "package:loco11y/features/http_log/request_summary.dart";
+import "package:loco11y/areas/http_log/ui/components/request_detail.dart";
+import "package:loco11y/areas/http_log/ui/components/request_summary.dart";
 
 class HttpLogInnerScreen extends StatelessWidget {
   const HttpLogInnerScreen({super.key});
