@@ -28,6 +28,11 @@ class HttpLogPersister extends _$HttpLogPersister {
       ),
     ];
   }
+
+  void addLog(HttpLog log) async {
+    final data = await future;
+    state = AsyncValue.data([log, ...data]);
+  }
 }
 
 class HttpLog {

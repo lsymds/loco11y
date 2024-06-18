@@ -1,10 +1,20 @@
+import "dart:io";
+
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
+import "package:loco11y/areas/http_log/proxy/proxy_server.dart";
 import "package:loco11y/areas/http_log/ui/screens/inner_screen.dart";
 import "package:loco11y/shared/ui/components/sidebar.dart";
 
-void main() {
-  runApp(const ProviderScope(child: MyApp()));
+void main() async {
+  final container = ProviderContainer();
+
+  await runProxyServer(container);
+
+  runApp(UncontrolledProviderScope(
+    container: container,
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
