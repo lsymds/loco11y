@@ -7,8 +7,8 @@ import "package:riverpod_annotation/riverpod_annotation.dart";
 part "inner_screen.g.dart";
 
 class HttpLogInnerScreenData {
-  final List<CaughtHttpRequest> requests;
-  final CaughtHttpRequest? requestBeingViewed;
+  final List<HttpLog> requests;
+  final HttpLog? requestBeingViewed;
 
   HttpLogInnerScreenData({required this.requests, this.requestBeingViewed});
 }
@@ -21,7 +21,7 @@ class HttpLogInnerScreenDataManager extends _$HttpLogInnerScreenDataManager {
     return HttpLogInnerScreenData(requests: caughtRequests);
   }
 
-  Future openRequest(CaughtHttpRequest request) async {
+  Future openRequest(HttpLog request) async {
     final data = await future;
     state = AsyncValue.data(HttpLogInnerScreenData(
         requests: data.requests, requestBeingViewed: request));
@@ -57,14 +57,16 @@ class HttpLogInnerScreen extends ConsumerWidget {
                 child: ListView(
                   children: data.requests
                       .map((r) => RequestSummary(
-                          model: r, onTap: () => manager.openRequest(r)))
+                          request: r, onTap: () => manager.openRequest(r)))
                       .toList(),
                 ),
               ),
               if (data.requestBeingViewed != null)
-                const Expanded(
+                Expanded(
                   child: SingleChildScrollView(
-                    child: RequestDetail(),
+                    child: RequestDetail(
+                      request: data.requestBeingViewed!,
+                    ),
                   ),
                 ),
             ],

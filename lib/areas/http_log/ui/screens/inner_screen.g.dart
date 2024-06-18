@@ -7,7 +7,7 @@ part of 'inner_screen.dart';
 // **************************************************************************
 
 String _$httpLogInnerScreenDataManagerHash() =>
-    r'b3c0eb4ed70893c2a667174cf8969b6139cf79aa';
+    r'062b667064902f9e9786de50b9f76bdf76091461';
 
 /// See also [HttpLogInnerScreenDataManager].
 @ProviderFor(HttpLogInnerScreenDataManager)

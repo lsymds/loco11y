@@ -3,10 +3,10 @@ import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:loco11y/areas/http_log/proxy/http_log_persister.dart";
 
 class RequestSummary extends ConsumerWidget {
-  final CaughtHttpRequest model;
+  final HttpLog request;
   final VoidCallback onTap;
 
-  const RequestSummary({super.key, required this.model, required this.onTap});
+  const RequestSummary({super.key, required this.request, required this.onTap});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -19,18 +19,18 @@ class RequestSummary extends ConsumerWidget {
             bottom: BorderSide(color: Colors.black),
           ),
         ),
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
                 Expanded(
-                  child: Text("POST api.github.com"),
+                  child: Text("POST ${request.uri.host}"),
                 ),
-                Text("200"),
+                Text(request.response.statusCode.toString()),
               ],
             ),
-            Text("3 minutes ago"),
+            Text(request.receivedAt.toString()),
           ],
         ),
       ),

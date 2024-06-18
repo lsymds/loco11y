@@ -1,7 +1,13 @@
 import "package:flutter/material.dart";
+import "package:loco11y/areas/http_log/proxy/http_log_persister.dart";
 
 class RequestDetail extends StatelessWidget {
-  const RequestDetail({super.key});
+  final HttpLog request;
+
+  const RequestDetail({
+    super.key,
+    required this.request,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -10,15 +16,15 @@ class RequestDetail extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(12),
           decoration: const BoxDecoration(color: Colors.lightBlue),
-          child: const Row(
+          child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Text("POST api.github.com/users/create"),
+                child: Text("POST ${request.uri.toString()}"),
               ),
-              Text("200 - OK"),
-              SizedBox(height: 100),
+              Text(request.response.statusCode.toString()),
+              const SizedBox(height: 100),
             ],
           ),
         ),
