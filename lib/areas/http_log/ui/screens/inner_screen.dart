@@ -17,8 +17,20 @@ class HttpLogInnerScreenData {
 class HttpLogInnerScreenDataManager extends _$HttpLogInnerScreenDataManager {
   @override
   Future<HttpLogInnerScreenData> build() async {
-    final caughtRequests = await ref.watch(httpLogPersisterProvider.future);
-    return HttpLogInnerScreenData(requests: caughtRequests);
+    ref.listen(
+      httpLogPersisterProvider,
+      (_, c) async {
+        final data = await future;
+
+        c.whenData((current) {
+          state = AsyncValue.data(HttpLogInnerScreenData(
+              requests: current, requestBeingViewed: data.requestBeingViewed));
+        });
+      },
+      fireImmediately: true,
+    );
+
+    return HttpLogInnerScreenData(requests: []);
   }
 
   Future openRequest(HttpLog request) async {
