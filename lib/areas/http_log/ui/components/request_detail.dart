@@ -30,12 +30,19 @@ class RequestDetail extends StatelessWidget {
         ),
         Container(
           padding: const EdgeInsets.fromLTRB(12, 24, 12, 0),
-          child: const Row(
+          child: Row(
             children: [
               Expanded(
-                child: Text("Request Headers"),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Request Headers"),
+                    Text(request.request.headers.toString()),
+                  ],
+                ),
               ),
-              Expanded(
+              const Expanded(
                 child: Text("Request Body"),
               ),
             ],

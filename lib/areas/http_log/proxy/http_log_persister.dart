@@ -1,5 +1,3 @@
-import "dart:io";
-
 import "package:riverpod_annotation/riverpod_annotation.dart";
 part "http_log_persister.g.dart";
 
@@ -11,19 +9,19 @@ class HttpLogPersister extends _$HttpLogPersister {
       HttpLog(
         method: "POST",
         uri: Uri.parse("https://api.github.com/api/v1/users"),
-        request: HttpLogRequest(),
+        request: HttpLogRequest(headers: {}),
         response: HttpLogResponse(statusCode: 200),
       ),
       HttpLog(
         method: "POST",
         uri: Uri.parse("https://api.github.com/api/v1/stars"),
-        request: HttpLogRequest(),
+        request: HttpLogRequest(headers: {}),
         response: HttpLogResponse(statusCode: 200),
       ),
       HttpLog(
         method: "POST",
         uri: Uri.parse("https://api.github.com/api/v1/repositories"),
-        request: HttpLogRequest(),
+        request: HttpLogRequest(headers: {}),
         response: HttpLogResponse(statusCode: 200),
       ),
     ];
@@ -51,7 +49,11 @@ class HttpLog {
   }) : receivedAt = receivedAt ?? DateTime.now();
 }
 
-class HttpLogRequest {}
+class HttpLogRequest {
+  final Map<String, String> headers;
+
+  HttpLogRequest({required this.headers});
+}
 
 class HttpLogResponse {
   final int statusCode;
