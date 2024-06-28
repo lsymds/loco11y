@@ -10,19 +10,19 @@ class HttpLogPersister extends _$HttpLogPersister {
         method: "POST",
         uri: Uri.parse("https://api.github.com/api/v1/users"),
         request: HttpLogRequest(headers: {}),
-        response: HttpLogResponse(statusCode: 200),
+        response: HttpLogResponse(statusCode: 200, headers: {}),
       ),
       HttpLog(
         method: "POST",
         uri: Uri.parse("https://api.github.com/api/v1/stars"),
         request: HttpLogRequest(headers: {}),
-        response: HttpLogResponse(statusCode: 200),
+        response: HttpLogResponse(statusCode: 200, headers: {}),
       ),
       HttpLog(
         method: "POST",
         uri: Uri.parse("https://api.github.com/api/v1/repositories"),
         request: HttpLogRequest(headers: {}),
-        response: HttpLogResponse(statusCode: 200),
+        response: HttpLogResponse(statusCode: 200, headers: {}),
       ),
     ];
   }
@@ -57,6 +57,10 @@ class HttpLogRequest {
 
 class HttpLogResponse {
   final int statusCode;
+  final Map<String, String> headers;
 
-  HttpLogResponse({required this.statusCode});
+  HttpLogResponse({
+    required this.statusCode,
+    required this.headers,
+  });
 }

@@ -11,12 +11,12 @@ void main() async {
 
   runApp(UncontrolledProviderScope(
     container: container,
-    child: const MyApp(),
+    child: const Loco11yApp(),
   ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Loco11yApp extends StatelessWidget {
+  const Loco11yApp({super.key});
 
   // This widget is the root of your application.
   @override

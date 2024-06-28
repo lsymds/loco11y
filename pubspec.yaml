@@ -38,6 +38,7 @@ dependencies:
   flutter_riverpod: ^2.5.1
   riverpod_annotation: ^2.3.5
   shelf: ^1.4.1
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
