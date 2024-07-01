@@ -1,4 +1,5 @@
 import "dart:async";
+import "dart:typed_data";
 import "package:http/http.dart" as http;
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:loco11y/areas/http_log/proxy/http_log_persister.dart";
@@ -18,6 +19,9 @@ Future<Response> Function(Request) _proxyHandler(ProviderContainer container) {
   return (req) async {
     final (proxiedRequest, proxiedResponse) = await _makeProxyRequest(req);
 
+    final proxiedResponseBody =
+        Uint8List.fromList(List<int>.from(proxiedResponse.bodyBytes));
+
     container.read(httpLogPersisterProvider.notifier).addLog(
           HttpLog(
             method: req.method,
@@ -26,13 +30,14 @@ Future<Response> Function(Request) _proxyHandler(ProviderContainer container) {
             response: HttpLogResponse(
               statusCode: proxiedResponse.statusCode,
               headers: proxiedResponse.headers,
+              body: proxiedResponseBody,
             ),
           ),
         );
 
     return Response(
       proxiedResponse.statusCode,
-      body: Stream.value(List<int>.from(proxiedResponse.bodyBytes)),
+      body: Stream.value(proxiedResponseBody),
       headers: proxiedResponse.headers,
     );
   };

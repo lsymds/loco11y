@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:loco11y/areas/http_log/proxy/http_log_persister.dart";
+import "package:loco11y/areas/http_log/ui/components/http_content.dart";
 
 class RequestDetail extends StatelessWidget {
   final HttpLog request;
@@ -31,6 +32,8 @@ class RequestDetail extends StatelessWidget {
         Container(
           padding: const EdgeInsets.fromLTRB(12, 24, 12, 0),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Column(
@@ -42,21 +45,48 @@ class RequestDetail extends StatelessWidget {
                   ],
                 ),
               ),
-              const Expanded(
-                child: Text("Request Body"),
+              Expanded(
+                child: Column(
+                  children: [
+                    const Text("Request Body"),
+                    HttpContent(
+                      contentType: request.request.contentType,
+                      body: request.response.body,
+                    )
+                  ],
+                ),
               ),
             ],
           ),
         ),
         Container(
-          padding: const EdgeInsets.fromLTRB(12, 200, 12, 0),
-          child: const Row(
+          padding: const EdgeInsets.fromLTRB(12, 36, 12, 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: Text("Response Headers"),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Response Headers",
+                        textAlign: TextAlign.left,
+                      ),
+                      Text(request.response.headers.toString()),
+                    ]),
               ),
               Expanded(
-                child: Text("Response Body"),
+                child: Column(
+                  children: [
+                    const Text("Response Body"),
+                    HttpContent(
+                      contentType: request.response.contentType,
+                      body: request.response.body,
+                    )
+                  ],
+                ),
               ),
             ],
           ),

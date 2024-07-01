@@ -1,3 +1,6 @@
+import "dart:typed_data";
+
+import "package:loco11y/areas/http_log/utils/content_type_helpers.dart";
 import "package:riverpod_annotation/riverpod_annotation.dart";
 part "http_log_persister.g.dart";
 
@@ -10,19 +13,31 @@ class HttpLogPersister extends _$HttpLogPersister {
         method: "POST",
         uri: Uri.parse("https://api.github.com/api/v1/users"),
         request: HttpLogRequest(headers: {}),
-        response: HttpLogResponse(statusCode: 200, headers: {}),
+        response: HttpLogResponse(
+          statusCode: 200,
+          headers: {},
+          body: Uint8List(0),
+        ),
       ),
       HttpLog(
         method: "POST",
         uri: Uri.parse("https://api.github.com/api/v1/stars"),
         request: HttpLogRequest(headers: {}),
-        response: HttpLogResponse(statusCode: 200, headers: {}),
+        response: HttpLogResponse(
+          statusCode: 200,
+          headers: {},
+          body: Uint8List(0),
+        ),
       ),
       HttpLog(
         method: "POST",
         uri: Uri.parse("https://api.github.com/api/v1/repositories"),
         request: HttpLogRequest(headers: {}),
-        response: HttpLogResponse(statusCode: 200, headers: {}),
+        response: HttpLogResponse(
+          statusCode: 200,
+          headers: {},
+          body: Uint8List(0),
+        ),
       ),
     ];
   }
@@ -53,14 +68,22 @@ class HttpLogRequest {
   final Map<String, String> headers;
 
   HttpLogRequest({required this.headers});
+
+  String get contentType =>
+      contentTypeWithoutCharset(headers["content-type"] ?? "text/plain");
 }
 
 class HttpLogResponse {
   final int statusCode;
   final Map<String, String> headers;
+  final Uint8List body;
 
   HttpLogResponse({
     required this.statusCode,
     required this.headers,
+    required this.body,
   });
+
+  String get contentType =>
+      contentTypeWithoutCharset(headers["content-type"] ?? "text/plain");
 }
