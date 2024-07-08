@@ -17,7 +17,8 @@ Future<void> runProxyServer(ProviderContainer container) async {
 
 Future<Response> Function(Request) _proxyHandler(ProviderContainer container) {
   return (req) async {
-    final (proxiedRequest, proxiedResponse) = await _makeProxyRequest(req);
+    final (proxiedRequest, proxiedResponse, responseTime) =
+        await _makeProxyRequest(req);
 
     final proxiedResponseBody =
         Uint8List.fromList(List<int>.from(proxiedResponse.bodyBytes));
@@ -34,6 +35,7 @@ Future<Response> Function(Request) _proxyHandler(ProviderContainer container) {
               statusCode: proxiedResponse.statusCode,
               headers: proxiedResponse.headers,
               body: proxiedResponseBody,
+              responseTimeInMilliseconds: responseTime,
             ),
           ),
         );
@@ -46,9 +48,10 @@ Future<Response> Function(Request) _proxyHandler(ProviderContainer container) {
   };
 }
 
-Future<(http.Request, http.Response)> _makeProxyRequest(
+Future<(http.Request, http.Response, int)> _makeProxyRequest(
   Request request,
 ) async {
+  final sw = Stopwatch();
   final client = http.Client();
   final newUri = Uri.parse(Uri.decodeComponent(request.url.toString()));
 
@@ -62,9 +65,17 @@ Future<(http.Request, http.Response)> _makeProxyRequest(
   proxiedRequest.bodyBytes =
       request.contentLength != null ? await requestBody.last : [];
 
+  sw.start();
+
   final proxiedResponse = await client.send(proxiedRequest);
   proxiedResponse.headers.remove("content-encoding");
   proxiedResponse.headers.remove("transfer-encoding");
 
-  return (proxiedRequest, await http.Response.fromStream(proxiedResponse));
+  final responseTime = sw.elapsedMilliseconds;
+
+  return (
+    proxiedRequest,
+    await http.Response.fromStream(proxiedResponse),
+    responseTime
+  );
 }

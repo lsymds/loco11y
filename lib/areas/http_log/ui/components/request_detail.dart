@@ -25,6 +25,7 @@ class RequestDetail extends StatelessWidget {
               Expanded(
                 child: Text("POST ${request.uri.toString()}"),
               ),
+              Text("${request.response.responseTimeInMilliseconds}ms"),
               Text(request.response.statusCode.toString()),
               const SizedBox(height: 100),
             ],

@@ -50,11 +50,13 @@ class HttpLogResponse {
   final int statusCode;
   final Map<String, String> headers;
   final Uint8List body;
+  final int responseTimeInMilliseconds;
 
   HttpLogResponse({
     required this.statusCode,
     required this.headers,
     required this.body,
+    required this.responseTimeInMilliseconds,
   });
 
   String get contentType =>
