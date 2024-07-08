@@ -1,5 +1,6 @@
 import "package:flutter/material.dart";
 import "package:loco11y/areas/http_log/proxy/http_log_persister.dart";
+import "package:loco11y/areas/http_log/ui/components/code_block.dart";
 import "package:loco11y/areas/http_log/ui/components/http_content.dart";
 
 class RequestDetail extends StatelessWidget {
@@ -41,12 +42,14 @@ class RequestDetail extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text("Request Headers"),
-                    Text(request.request.headers.toString()),
+                    CodeBlock(body: request.request.headers.toString()),
                   ],
                 ),
               ),
               Expanded(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text("Request Body"),
                     HttpContent(
@@ -74,11 +77,13 @@ class RequestDetail extends StatelessWidget {
                         "Response Headers",
                         textAlign: TextAlign.left,
                       ),
-                      Text(request.response.headers.toString()),
+                      CodeBlock(body: request.response.headers.toString()),
                     ]),
               ),
               Expanded(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text("Response Body"),
                     HttpContent(
