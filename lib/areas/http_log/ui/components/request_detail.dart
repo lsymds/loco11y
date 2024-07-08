@@ -54,7 +54,7 @@ class RequestDetail extends StatelessWidget {
                     const Text("Request Body"),
                     HttpContent(
                       contentType: request.request.contentType,
-                      body: request.response.body,
+                      body: request.request.body,
                     )
                   ],
                 ),

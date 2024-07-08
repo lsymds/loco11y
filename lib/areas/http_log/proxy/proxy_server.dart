@@ -26,7 +26,10 @@ Future<Response> Function(Request) _proxyHandler(ProviderContainer container) {
           HttpLog(
             method: req.method,
             uri: proxiedRequest.url,
-            request: HttpLogRequest(headers: req.headers),
+            request: HttpLogRequest(
+              headers: req.headers,
+              body: proxiedRequest.bodyBytes,
+            ),
             response: HttpLogResponse(
               statusCode: proxiedResponse.statusCode,
               headers: proxiedResponse.headers,
@@ -49,11 +52,15 @@ Future<(http.Request, http.Response)> _makeProxyRequest(
   final client = http.Client();
   final newUri = Uri.parse(Uri.decodeComponent(request.url.toString()));
 
+  final requestBody = request.read();
+
   final proxiedRequest = http.Request(request.method, newUri);
   for (var header in request.headers.entries) {
     proxiedRequest.headers[header.key] = header.value;
   }
   proxiedRequest.headers["host"] = newUri.host;
+  proxiedRequest.bodyBytes =
+      request.contentLength != null ? await requestBody.last : [];
 
   final proxiedResponse = await client.send(proxiedRequest);
   proxiedResponse.headers.remove("content-encoding");

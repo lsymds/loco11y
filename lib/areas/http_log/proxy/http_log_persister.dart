@@ -8,38 +8,7 @@ part "http_log_persister.g.dart";
 class HttpLogPersister extends _$HttpLogPersister {
   @override
   Future<List<HttpLog>> build() async {
-    return [
-      HttpLog(
-        method: "POST",
-        uri: Uri.parse("https://api.github.com/api/v1/users"),
-        request: HttpLogRequest(headers: {}),
-        response: HttpLogResponse(
-          statusCode: 200,
-          headers: {},
-          body: Uint8List(0),
-        ),
-      ),
-      HttpLog(
-        method: "POST",
-        uri: Uri.parse("https://api.github.com/api/v1/stars"),
-        request: HttpLogRequest(headers: {}),
-        response: HttpLogResponse(
-          statusCode: 200,
-          headers: {},
-          body: Uint8List(0),
-        ),
-      ),
-      HttpLog(
-        method: "POST",
-        uri: Uri.parse("https://api.github.com/api/v1/repositories"),
-        request: HttpLogRequest(headers: {}),
-        response: HttpLogResponse(
-          statusCode: 200,
-          headers: {},
-          body: Uint8List(0),
-        ),
-      ),
-    ];
+    return [];
   }
 
   void addLog(HttpLog log) async {
@@ -66,8 +35,12 @@ class HttpLog {
 
 class HttpLogRequest {
   final Map<String, String> headers;
+  final Uint8List body;
 
-  HttpLogRequest({required this.headers});
+  HttpLogRequest({
+    required this.headers,
+    required this.body,
+  });
 
   String get contentType =>
       contentTypeWithoutCharset(headers["content-type"] ?? "text/plain");

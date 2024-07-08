@@ -30,7 +30,7 @@ class HttpContent extends StatelessWidget {
 class _EmptyHttpResponseContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Text("No content");
   }
 }
 
