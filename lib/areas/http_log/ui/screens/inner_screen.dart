@@ -68,8 +68,13 @@ class HttpLogInnerScreen extends ConsumerWidget {
                 ),
                 child: ListView(
                   children: data.requests
-                      .map((r) => RequestSummary(
-                          request: r, onTap: () => manager.openRequest(r)))
+                      .map(
+                        (r) => RequestSummary(
+                          active: r == data.requestBeingViewed,
+                          request: r,
+                          onTap: () => manager.openRequest(r),
+                        ),
+                      )
                       .toList(),
                 ),
               ),

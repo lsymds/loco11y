@@ -2,7 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:loco11y/areas/http_log/proxy/proxy_server.dart";
 import "package:loco11y/areas/http_log/ui/screens/inner_screen.dart";
-import "package:loco11y/shared/ui/components/sidebar.dart";
+import "package:loco11y/shared/ui/components/sidebar/sidebar.dart";
 
 void main() async {
   final container = ProviderContainer();
@@ -23,7 +23,10 @@ class Loco11yApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "loco11y",
-      theme: ThemeData.light(useMaterial3: true),
+      theme: ThemeData.from(
+        colorScheme: const ColorScheme.light(),
+        useMaterial3: true,
+      ),
       home: Scaffold(
         body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
