@@ -25,7 +25,7 @@ class RequestSummary extends ConsumerWidget {
             Row(
               children: [
                 Expanded(
-                  child: Text("POST ${request.uri.host}"),
+                  child: Text("${request.method} ${request.uri.host}"),
                 ),
                 Text(request.response.statusCode.toString()),
               ],
